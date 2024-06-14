@@ -1,13 +1,13 @@
 import { React, useState, useEffect } from 'react'
-import { Add, Amount, AvatarImage, Brand, ButtonAddToCard, Buy, Card, CartImage, Container, Count, Desc, Discount, Icons, ImageCard, Images, Item, ItensCard, Menu, MenuList, Nav, NewPrice, OldPrice, Price, PrincipalImage, Product, ProductImage, ProductImages, ProductInfos, Remove, TextCard, Title, TitleCard } from './style'
+import { Add, Amount, AvatarImage, Brand, BtnCloseCard, ButtonAddToCard, Buy, Card, CartImage, CloseCard, Container, Count, Desc, Discount, Icons, ImageCard, ImageLine, ImageNext, ImagePrevious, ImagePrincipalCard, Images, ImagesLine, Item, ItensCard, Menu, MenuList, Nav, NewPrice, Next, NumberAmount, OldPrice, Previous, Price, PrincipalImage, Product, ProductImage, ProductImages, ProductInfos, Remove, TextCard, Title, TitleCard } from './style'
 
 export function Home() {
 
   const basePath = './';
   const [mounted,setMounted] = useState(false)
   const [count, setCount] = useState(0);
+  const [totalItems, setTotalItems] = useState(0); // Quantidade total de itens no carrinho
   const [selectedImage, setSelectedImage] = useState(basePath + 'image-product-1.jpg'); // Inicialize com o caminho da primeira imagem
-  const [cartVisible, setCartVisible] = useState(false); // Estado para controlar a visibilidade do carrinho
 
   const incrementCount = () => {
     setCount(count + 1);
@@ -19,14 +19,21 @@ export function Home() {
     }
   };
 
+  const handleAddToCart = () => {
+    if (count > 0) {
+      const numberAmount = document.querySelector('.number-amount');
+      const newTotalItems = totalItems + count;
+      setTotalItems(newTotalItems);
+      numberAmount.classList.remove('hide');
+      numberAmount.innerText = newTotalItems; // Atualiza o texto do number-amount com o novo total de itens
+      setCount(0); // Reseta a quantidade selecionada para zero
+    }
+  };
+
   const handleImageClick = (thumbnailName) => {
     const mainImageName = thumbnailName.replace('-thumbnail', ''); // Remove o sufixo "-thumbnail" do nome do arquivo
     setSelectedImage(basePath + mainImageName);
   };
-
-  function showCardImage() {
-    !cartVisible;
-  }
 
   useEffect(() => {
           
@@ -35,16 +42,30 @@ export function Home() {
       const btnCart = document.querySelector('.btn-cart');
       const cart = document.querySelector('.cart');
       const principalImage = document.querySelector('.principal-image');
+      const overlay = document.querySelector('.overlay');
       const imageCard = document.querySelector('.image-card');
+      const btnCloseCard = document.querySelector('.btn-closecard');
 
+      principalImage.addEventListener('click', () => {
+        overlay.classList.remove('hide');
+        imageCard.classList.remove('hide');
+      })
+
+      function closeImageCard() {
+        overlay.classList.add('hide');
+        imageCard.classList.add('hide');
+      }
+      
       document.addEventListener('click', (event) => {
-        console.log(imageCard);
-        if (!imageCard.contains(event.target) && event.target !== principalImage && cartVisible) {
-          setCartVisible(false); // Esconder o carrinho se estiver visível e o clique ocorrer fora dele
+        if (!imageCard.contains(event.target) && event.target !== principalImage) {
+          closeImageCard();
         }
       });
 
-    
+      btnCloseCard.addEventListener('click', () => {
+        closeImageCard();
+      });
+
       btnCart.addEventListener('click', () => {
         cart.classList.toggle('hide');
       });
@@ -62,10 +83,11 @@ export function Home() {
         setMounted(true);
     }
 
-  },[mounted, cartVisible])
+  },[mounted])
 
   return (
    <Container>
+    <NumberAmount className="number-amount hide">{totalItems}</NumberAmount>
     <Nav>
       <Menu>
         <MenuList>
@@ -85,7 +107,7 @@ export function Home() {
     <hr></hr>
     <Product>
       <ProductImages>
-        <PrincipalImage src={selectedImage} className='principal-image' onClick={showCardImage}></PrincipalImage>
+        <PrincipalImage src={selectedImage} className='principal-image'></PrincipalImage>
         <Images>
         <ProductImage
           src='image-product-1-thumbnail.jpg'
@@ -124,7 +146,7 @@ export function Home() {
             <Amount>{count}</Amount>
             <Add src='icon-plus.svg' onClick={incrementCount}></Add>
           </Count>
-          <ButtonAddToCard><img src='icon-cart.svg'></img> Add to cart</ButtonAddToCard>
+          <ButtonAddToCard onClick={handleAddToCart}><img src='icon-cart.svg'></img> Add to cart</ButtonAddToCard>
         </Buy>
       </ProductInfos>
     </Product>
@@ -135,17 +157,26 @@ export function Home() {
         <TextCard>Your cart is empty.</TextCard>
       </ItensCard>
     </Card>
-    {cartVisible && (
-        <div className="overlay">
-          <ImageCard className='image-card'>
-            <TitleCard>Cart</TitleCard>
-            <hr></hr>
-            <ItensCard>
-              <TextCard>Your cart is empty.</TextCard>
-            </ItensCard>
+        <div className="overlay hide">
+          <ImageCard className='image-card hide'>
+            <ImagePrincipalCard src={selectedImage}></ImagePrincipalCard>
+            <Previous>
+              <ImagePrevious src='icon-previous.svg'></ImagePrevious>
+            </Previous>
+            <Next>
+              <ImageNext src='icon-next.svg'></ImageNext>
+            </Next>
+            <ImagesLine>
+              <ImageLine src='image-product-1-thumbnail.jpg' className={selectedImage === basePath + 'image-product-1.jpg' ? 'selected' : ''} onClick={() => handleImageClick('image-product-1-thumbnail.jpg')}></ImageLine>
+              <ImageLine src='image-product-2-thumbnail.jpg' className={selectedImage === basePath + 'image-product-2.jpg' ? 'selected' : ''} onClick={() => handleImageClick('image-product-2-thumbnail.jpg')}></ImageLine>
+              <ImageLine src='image-product-3-thumbnail.jpg' className={selectedImage === basePath + 'image-product-3.jpg' ? 'selected' : ''} onClick={() => handleImageClick('image-product-3-thumbnail.jpg')}></ImageLine>
+              <ImageLine src='image-product-4-thumbnail.jpg' className={selectedImage === basePath + 'image-product-4.jpg' ? 'selected' : ''} onClick={() => handleImageClick('image-product-4-thumbnail.jpg')}></ImageLine>
+            </ImagesLine>
+            <CloseCard className='btn-closecard'>
+              <BtnCloseCard src='icon-close.svg'></BtnCloseCard>
+            </CloseCard>
           </ImageCard>
         </div>
-    )}
    </Container>
   )
 }

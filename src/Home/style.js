@@ -28,6 +28,24 @@ export const Container = styled.div`
 
 `;
 
+export const NumberAmount = styled.p`
+
+    position: absolute;
+    background-color: hsl(26, 100%, 55%);
+    border-radius: 1rem;
+    width: 1.3rem;
+    font-weight: 700;
+    font-size: .7rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0;
+    margin-right: 19.6rem;
+    margin-top: -.2rem;
+
+`;
+
 export const Nav = styled.nav`
 
     display: flex;
@@ -325,9 +343,108 @@ export const TextCard = styled.p`
 export const ImageCard = styled.div`
 
     background-color: white;
-    padding: 20px;
-    border-radius: 5px;
+    border-radius: .5rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra para o card de carrinho */
     z-index: 1000; /* Certifique-se de que o card de carrinho esteja acima da sobreposição */
+    width: 30%;
+    position: relative;
+
+`;
+
+export const ImagePrincipalCard = styled.img`
+    width: 100%;
+    border-radius: .5rem;
+`;
+
+export const Previous = styled.div`
+
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-left: -1.7rem;
+    border-radius: 50%;
+    background-color: white;
+    padding: .5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+`;
+
+export const ImagePrevious = styled.img`
+
+`;
+
+export const Next = styled.div`
+
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-right: -1.7rem;
+    border-radius: 50%;
+    background-color: white;
+    padding: .5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+`;
+
+export const ImageNext = styled.img`
+
+`;
+
+export const ImagesLine = styled.div`
+
+    position: absolute;
+    right: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+
+    .selected {
+        border: 3px solid orange;
+        filter: opacity(35%);
+    }
+
+`;
+
+export const ImageLine = styled.img`
+
+    width: 6rem;
+    border-radius: 1rem;
+    cursor: pointer;
+
+`;
+
+export const CloseCard = styled.div`
+
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: -3rem;
+    border-radius: 50%;
+    background-color: white;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+`;
+
+export const BtnCloseCard = styled.img`
+
+    width: 1    rem;
 
 `;

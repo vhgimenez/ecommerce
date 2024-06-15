@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react'
-import { Add, Amount, AvatarImage, Brand, BtnCloseCard, ButtonAddToCard, Buy, Card, CartImage, CloseCard, Container, Count, Desc, Discount, Icons, ImageCard, ImageLine, ImageNext, ImagePrevious, ImagePrincipalCard, Images, ImagesLine, Item, ItensCard, Menu, MenuList, Nav, NewPrice, Next, NumberAmount, OldPrice, Previous, Price, PrincipalImage, Product, ProductImage, ProductImages, ProductInfos, Remove, TextCard, Title, TitleCard } from './style'
+import { Add, Amount, AvatarImage, Brand, BtnCloseCard, ButtonAddToCard, ButtonCheckout, Buy, Card, CardPurchase, CardVisible, CartImage, CloseCard, CloseMenu, Container, ContentCard, Count, DeleteImage, Desc, Discount, Icons, ImageCard, ImageCart, ImageLine, ImageNext, ImagePrevious, ImagePrincipalCard, Images, ImagesLine, Item, ItemMobile, ItensCard, ItensCardEmpty, Menu, MenuList, MenuListMobile, MenuMobile, Nav, NewPrice, Next, NextMobile, NumberAmount, OldPrice, Previous, PreviousMobile, Price, PrincipalImage, Product, ProductImage, ProductImages, ProductInfos, Remove, TextCard, TextProductCard, TextProductP, Title, TitleCard, TotalPrice } from './style'
 
 export function Home() {
 
@@ -23,10 +23,41 @@ export function Home() {
     if (count > 0) {
       const numberAmount = document.querySelector('.number-amount');
       const newTotalItems = totalItems + count;
+      const empty = document.querySelector('.empty');
+      const visibleCard = document.querySelector('.visible-card');
       setTotalItems(newTotalItems);
       numberAmount.classList.remove('hide');
       numberAmount.innerText = newTotalItems; // Atualiza o texto do number-amount com o novo total de itens
       setCount(0); // Reseta a quantidade selecionada para zero
+
+      const deleteCard = document.querySelector('.delete');
+      const checkout = document.querySelector('.checkout');
+      const purchase = document.querySelector('.purchase');
+
+      deleteCard.addEventListener('click', () => {
+        setTotalItems(0);
+        numberAmount.classList.add('hide');
+        empty.classList.remove('hide');
+        visibleCard.classList.add('hide');
+      });
+
+      checkout.addEventListener('click', () => {
+        setTotalItems(0);
+        numberAmount.classList.add('hide');
+        visibleCard.classList.add('hide');
+        purchase.classList.remove('hide');
+
+        setTimeout(() => {
+          purchase.classList.add('hide');
+          empty.classList.remove('hide');
+        }, 3000);
+      });
+
+      if (newTotalItems > 0) {
+        empty.classList.add('hide');
+        visibleCard.classList.remove('hide');
+      };
+
     }
   };
 
@@ -45,6 +76,17 @@ export function Home() {
       const overlay = document.querySelector('.overlay');
       const imageCard = document.querySelector('.image-card');
       const btnCloseCard = document.querySelector('.btn-closecard');
+      const btnMenuMobile = document.querySelector('.btn-menu-mobile');
+      const menuMobile = document.querySelector('.menu-mobile');
+      const btnCloseMenu = document.querySelector('.btn-close-menu');
+
+      btnMenuMobile.addEventListener('click', () => {
+        menuMobile.classList.remove('hide');
+      })
+
+      btnCloseMenu.addEventListener('click', () => {
+        menuMobile.classList.add('hide');
+      })
 
       principalImage.addEventListener('click', () => {
         overlay.classList.remove('hide');
@@ -88,9 +130,20 @@ export function Home() {
   return (
    <Container>
     <NumberAmount className="number-amount hide">{totalItems}</NumberAmount>
+    <MenuMobile className='menu-mobile hide'>
+      <CloseMenu className='btn-close-menu' src='icon-close.svg'></CloseMenu>
+      <MenuListMobile>
+        <ItemMobile>Collections</ItemMobile>
+        <ItemMobile>Men</ItemMobile>
+        <ItemMobile>Women</ItemMobile>
+        <ItemMobile>About</ItemMobile>
+        <ItemMobile>Contact</ItemMobile>
+      </MenuListMobile>
+    </MenuMobile>
     <Nav>
       <Menu>
         <MenuList>
+          <Item className='btn-menu-mobile'><img src='icon-menu.svg'></img></Item>
           <Item className='logo'><img src='logo.svg'></img></Item>
           <Item>Collections</Item>
           <Item>Men</Item>
@@ -106,6 +159,8 @@ export function Home() {
     </Nav>
     <hr></hr>
     <Product>
+      <PreviousMobile><img src='icon-previous.svg'></img></PreviousMobile>
+      <NextMobile><img src='icon-next.svg'></img></NextMobile>
       <ProductImages>
         <PrincipalImage src={selectedImage} className='principal-image'></PrincipalImage>
         <Images>
@@ -135,11 +190,13 @@ export function Home() {
         <Brand>Sneaker Company</Brand>
         <Title>Fall Limited Edition Sneakers</Title>
         <Desc>These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they'll withstand everything the weather can offer.</Desc>
-        <Price>
-          <NewPrice>$125.00</NewPrice>
-          <Discount>50%</Discount>
-        </Price>
-        <OldPrice><s>$250.00</s></OldPrice>
+        <TotalPrice>
+          <Price>
+            <NewPrice>$125.00</NewPrice>
+            <Discount>50%</Discount>
+          </Price>
+          <OldPrice><s>$250.00</s></OldPrice>
+        </TotalPrice>
         <Buy>
           <Count>
             <Remove src='icon-minus.svg' onClick={decrementCount}></Remove>
@@ -153,9 +210,25 @@ export function Home() {
     <Card className='cart hide'>
       <TitleCard>Cart</TitleCard>
       <hr></hr>
-      <ItensCard>
+      <ItensCardEmpty className='empty'>
         <TextCard>Your cart is empty.</TextCard>
-      </ItensCard>
+      </ItensCardEmpty>
+      <CardPurchase className='purchase hide'>
+        <TextCard className='text-purchase'>Compra realizada com sucesso!</TextCard>
+      </CardPurchase>
+      <CardVisible className='visible-card hide'>
+        <ItensCard>
+          <ContentCard>
+            <ImageCart src={selectedImage}></ImageCart>
+            <TextProductCard>
+              <TextProductP>Fall Limited Edition Sneakers</TextProductP>
+              <TextProductP>$125.00 x {totalItems} <b>${125.00 * totalItems}.00</b></TextProductP>
+            </TextProductCard>
+          </ContentCard>
+          <DeleteImage src='icon-delete.svg' className='delete'></DeleteImage>
+        </ItensCard>
+        <ButtonCheckout className='checkout'>Checkout</ButtonCheckout>
+      </CardVisible>
     </Card>
         <div className="overlay hide">
           <ImageCard className='image-card hide'>

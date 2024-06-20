@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { AvatarImage, ButtonCheckout, Card, CardPurchase, CardVisible, CartImage, CloseMenu, Container, ContentCard, ContentProduct, DeleteImage, Icons, ImageCart, Item, ItemMobile, ItensCard, ItensCardEmpty, Menu, MenuList, MenuListMobile, MenuMobile, Nav, NumberAmount, Price, ProductDescription, ProductImage, ProductName, Product, Products, SectionProductImage, TextCard, TextProductCard, TextProductP, TitleCard} from './style'
+import adi2000 from '../assets/adi2000.avif';
 
 export function Collections() {
 
@@ -112,7 +113,7 @@ export function Collections() {
     <Product key={product.id}>
       <Link className='link' to={`/product/${product.id}`}>
         <SectionProductImage>
-            <ProductImage src={`${product.image1}`}></ProductImage>
+            <ProductImage src={product.image1 === 'adi2000' ? adi2000 : product.image1}></ProductImage>
         </SectionProductImage>
         <ContentProduct>
             <ProductName>{product.name}</ProductName>

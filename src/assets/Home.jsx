@@ -24,10 +24,6 @@ import knu2 from '../assets/knu2.webp';
 import knu3 from '../assets/knu3.webp';
 import knu4 from '../assets/knu4.webp';
 import iconDelete from '../assets/icon-delete.svg';
-import iconPrevious from '../assets/icon-previous.svg';
-import iconNext from '../assets/icon-next.svg';
-import iconMenu from '../assets/icon-menu.svg';
-import iconClose from '../assets/icon-close.svg';
 
 
 export function Home() {
@@ -172,17 +168,10 @@ export function Home() {
         menuMobile.classList.add('hide');
       })
 
-      function openCardImage() {
-        overlay.classList.remove('hide');
-        imageCard.classList.remove('hide');
-      }
-
-      document.addEventListener('DOMContentLoaded', () => {
-        // Este código será executado quando o DOM estiver completamente carregado
-        principalImage.addEventListener('click', () => {
-          openCardImage();
-        });
-      });
+      //principalImage.addEventListener('click', () => {
+        //overlay.classList.remove('hide');
+        //imageCard.classList.remove('hide');
+      //})
 
       function closeImageCard() {
         overlay.classList.add('hide');
@@ -224,7 +213,7 @@ export function Home() {
    <Container>
     <NumberAmount className="number-amount hide">{totalItems}</NumberAmount>
     <MenuMobile className='menu-mobile hide'>
-      <CloseMenu className='btn-close-menu' src={iconClose}></CloseMenu>
+      <CloseMenu className='btn-close-menu' src='icon-close.svg'></CloseMenu>
       <MenuListMobile>
         <ItemMobile>Collections</ItemMobile>
         <ItemMobile>Men</ItemMobile>
@@ -236,7 +225,7 @@ export function Home() {
     <Nav>
       <Menu>
         <MenuList>
-          <Item className='btn-menu-mobile'><img src={iconMenu}></img></Item>
+          <Item className='btn-menu-mobile'><img src='icon-menu.svg'></img></Item>
           <Item className='logo'><img src={logo}></img></Item>
           <Item>Collections</Item>
           <Item>Men</Item>
@@ -252,8 +241,8 @@ export function Home() {
     </Nav>
     <hr></hr>
     <Product>
-      <PreviousMobile><img src={iconPrevious}></img></PreviousMobile>
-      <NextMobile><img src={iconNext}></img></NextMobile>
+      <PreviousMobile><img src='icon-previous.svg'></img></PreviousMobile>
+      <NextMobile><img src='icon-next.svg'></img></NextMobile>
         {product && (
       <ProductImages>
           <PrincipalImage src={selectedImage} 
@@ -338,27 +327,17 @@ export function Home() {
           <ImageCard className='image-card hide'>
             <ImagePrincipalCard src={selectedImage}></ImagePrincipalCard>
             <Previous>
-              <ImagePrevious src={iconPrevious}></ImagePrevious>
+              <ImagePrevious src='icon-previous.svg'></ImagePrevious>
             </Previous>
             <Next>
-              <ImageNext src={iconNext}></ImageNext>
+              <ImageNext src='icon-next.svg'></ImageNext>
             </Next>
-            {product && (
-              <ImagesLine>
-              <ImageLine src={getImagePath(product.image1)} 
-              className={selectedImage === getImagePath(product.image1) ? 'selected' : ''}
-              onClick={() => handleImageClick(getImagePath(product.image1))}></ImageLine>
-              <ImageLine src={getImagePath(product.image2)} 
-              className={selectedImage === getImagePath(product.image2) ? 'selected' : ''}
-              onClick={() => handleImageClick(getImagePath(product.image2))}></ImageLine>
-              <ImageLine src={getImagePath(product.image3)} 
-              className={selectedImage === getImagePath(product.image3) ? 'selected' : ''}
-              onClick={() => handleImageClick(getImagePath(product.image3))}></ImageLine>
-              <ImageLine src={getImagePath(product.image4)} 
-              className={selectedImage === getImagePath(product.image4) ? 'selected' : ''}
-              onClick={() => handleImageClick(getImagePath(product.image4))}></ImageLine>
+            <ImagesLine>
+              <ImageLine src='image-product-1-thumbnail.jpg' className={selectedImage === basePath + 'image-product-1.jpg' ? 'selected' : ''} onClick={() => handleImageClick('image-product-1-thumbnail.jpg')}></ImageLine>
+              <ImageLine src='image-product-2-thumbnail.jpg' className={selectedImage === basePath + 'image-product-2.jpg' ? 'selected' : ''} onClick={() => handleImageClick('image-product-2-thumbnail.jpg')}></ImageLine>
+              <ImageLine src='image-product-3-thumbnail.jpg' className={selectedImage === basePath + 'image-product-3.jpg' ? 'selected' : ''} onClick={() => handleImageClick('image-product-3-thumbnail.jpg')}></ImageLine>
+              <ImageLine src='image-product-4-thumbnail.jpg' className={selectedImage === basePath + 'image-product-4.jpg' ? 'selected' : ''} onClick={() => handleImageClick('image-product-4-thumbnail.jpg')}></ImageLine>
             </ImagesLine>
-            )}
             <CloseCard className='btn-closecard'>
               <BtnCloseCard src='icon-close.svg'></BtnCloseCard>
             </CloseCard>

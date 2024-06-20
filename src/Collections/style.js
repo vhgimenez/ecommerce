@@ -399,6 +399,10 @@ export const Products = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
     gap: 2rem;
+
+    @media only screen and (max-width: 780px) {
+        grid-template-columns: repeat(1, 1fr); 
+    }
 `;
 
 export const Product = styled.div`
@@ -417,6 +421,11 @@ export const Product = styled.div`
         gap: 1rem;
     }
 
+    @media only screen and (max-width: 780px) {
+        width: 90%;
+        margin: 0 auto;
+    }
+
 `;
 
 export const SectionProductImage = styled.div`
@@ -427,6 +436,10 @@ export const ProductImage = styled.img`
 
     width: 10rem;
     border-radius: 1rem 0 0 1rem;
+
+    @media only screen and (max-width: 780px) {
+        width: 8rem;
+    }
 
 `;
 
@@ -439,6 +452,10 @@ export const ProductName = styled.h1`
     color: hsl(220, 13%, 13%);
     font-size: 1.4rem;
 
+    @media only screen and (max-width: 780px) {
+        font-size: 1.2rem;
+    }
+
 `;
 
 export const ProductDescription = styled.p`
@@ -447,6 +464,10 @@ export const ProductDescription = styled.p`
     width: 17rem;
     text-align: justify;
     color: hsl(219, 9%, 45%);
+
+    @media only screen and (max-width: 780px) {
+        font-size: .5rem;
+    }
 
 `;
 
@@ -457,5 +478,9 @@ export const Price = styled.p`
     font-size: .9rem;
     font-weight: 700;
     color: hsl(26, 100%, 55%);
+
+    @media only screen and (max-width: 780px) {
+        font-size: .8rem;
+    }
 
 `;

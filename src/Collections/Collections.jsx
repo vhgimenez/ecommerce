@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { AvatarImage, ButtonCheckout, Card, CardPurchase, CardVisible, CartImage, CloseMenu, Container, ContentCard, ContentProduct, DeleteImage, Icons, ImageCart, Item, ItemMobile, ItensCard, ItensCardEmpty, Menu, MenuList, MenuListMobile, MenuMobile, Nav, NumberAmount, Price, ProductDescription, ProductImage, ProductName, Product, Products, SectionProductImage, TextCard, TextProductCard, TextProductP, TitleCard} from './style'
 
 export function Collections() {
@@ -108,15 +109,17 @@ export function Collections() {
     </Card>
     <Products>
         {products&& products.map((product) => (
-    <Product>
+    <Product key={product.id}>
+      <Link className='link' to={`/product/${product.id}`}>
         <SectionProductImage>
-            <ProductImage src={product.image1}></ProductImage>
+            <ProductImage src={`${product.image1}`}></ProductImage>
         </SectionProductImage>
         <ContentProduct>
             <ProductName>{product.name}</ProductName>
             <ProductDescription>{product.description}</ProductDescription>
             <Price>R${product.price}.00</Price>
         </ContentProduct>
+      </Link>
     </Product>
         ))
         }

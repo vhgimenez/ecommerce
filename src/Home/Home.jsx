@@ -1,4 +1,6 @@
 import { React, useState, useEffect } from 'react'
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { Add, Amount, AvatarImage, Brand, BtnCloseCard, ButtonAddToCard, ButtonCheckout, Buy, Card, CardPurchase, CardVisible, CartImage, CloseCard, CloseMenu, Container, ContentCard, Count, DeleteImage, Desc, Discount, Icons, ImageCard, ImageCart, ImageLine, ImageNext, ImagePrevious, ImagePrincipalCard, Images, ImagesLine, Item, ItemMobile, ItensCard, ItensCardEmpty, Menu, MenuList, MenuListMobile, MenuMobile, Nav, NewPrice, Next, NextMobile, NumberAmount, OldPrice, Previous, PreviousMobile, Price, PrincipalImage, Product, ProductImage, ProductImages, ProductInfos, Remove, TextCard, TextProductCard, TextProductP, Title, TitleCard, TotalPrice } from './style'
 
 export function Home() {
@@ -8,6 +10,8 @@ export function Home() {
   const [count, setCount] = useState(0);
   const [totalItems, setTotalItems] = useState(0); // Quantidade total de itens no carrinho
   const [selectedImage, setSelectedImage] = useState(basePath + 'image-product-1.jpg'); // Inicialize com o caminho da primeira imagem
+  const { id } = useParams(); // Utilize o hook useParams para obter o parâmetro da rota
+  const [product, setProduct] = useState(null);
 
   const incrementCount = () => {
     setCount(count + 1);
@@ -80,6 +84,16 @@ export function Home() {
       const menuMobile = document.querySelector('.menu-mobile');
       const btnCloseMenu = document.querySelector('.btn-close-menu');
 
+      async function fetchProduct() {
+        try {
+          const response = await axios.get(`http://localhost:3000/products/${id}`);
+          console.log(response.data); // Debug: Verifica o que está sendo retornado pela API
+          setProduct(response.data);
+        } catch (error) {
+          console.error('Error fetching product:', error);
+        }
+      }
+
       btnMenuMobile.addEventListener('click', () => {
         menuMobile.classList.remove('hide');
       })
@@ -88,10 +102,10 @@ export function Home() {
         menuMobile.classList.add('hide');
       })
 
-      principalImage.addEventListener('click', () => {
-        overlay.classList.remove('hide');
-        imageCard.classList.remove('hide');
-      })
+      //principalImage.addEventListener('click', () => {
+        //overlay.classList.remove('hide');
+        //imageCard.classList.remove('hide');
+      //})
 
       function closeImageCard() {
         overlay.classList.add('hide');
@@ -119,13 +133,15 @@ export function Home() {
         }
       });
 
+      fetchProduct();
+
     }
 
     else{
         setMounted(true);
     }
 
-  },[mounted])
+  },[mounted, id])
 
   return (
    <Container>
@@ -161,38 +177,40 @@ export function Home() {
     <Product>
       <PreviousMobile><img src='icon-previous.svg'></img></PreviousMobile>
       <NextMobile><img src='icon-next.svg'></img></NextMobile>
+        {product && (
       <ProductImages>
-        <PrincipalImage src={selectedImage} className='principal-image'></PrincipalImage>
+          <PrincipalImage src={`./${product.image1}`} className='principal-image'></PrincipalImage>
         <Images>
         <ProductImage
-          src='image-product-1-thumbnail.jpg'
+          src={product.image1}
           className={selectedImage === basePath + 'image-product-1.jpg' ? 'selected' : ''}
           onClick={() => handleImageClick('image-product-1-thumbnail.jpg')}
-        />
+          />
         <ProductImage
-          src='image-product-2-thumbnail.jpg'
+          src={product.image2}
           className={selectedImage === basePath + 'image-product-2.jpg' ? 'selected' : ''}
           onClick={() => handleImageClick('image-product-2-thumbnail.jpg')}
-        />
+          />
         <ProductImage
-          src='image-product-3-thumbnail.jpg'
+          src={product.image3}
           className={selectedImage === basePath + 'image-product-3.jpg' ? 'selected' : ''}
           onClick={() => handleImageClick('image-product-3-thumbnail.jpg')}
-        />
+          />
         <ProductImage
-          src='image-product-4-thumbnail.jpg'
+          src={product.image4}
           className={selectedImage === basePath + 'image-product-4.jpg' ? 'selected' : ''}
           onClick={() => handleImageClick('image-product-4-thumbnail.jpg')}
-        />
+          />
         </Images>
       </ProductImages>
+        )}
       <ProductInfos>
         <Brand>Sneaker Company</Brand>
-        <Title>Fall Limited Edition Sneakers</Title>
-        <Desc>These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they'll withstand everything the weather can offer.</Desc>
+        <Title>{product ? product.name : ''}</Title>
+        <Desc>{product ? product.description : ''}</Desc>
         <TotalPrice>
           <Price>
-            <NewPrice>$125.00</NewPrice>
+            <NewPrice>${product ? product.price : ''}.00</NewPrice>
             <Discount>50%</Discount>
           </Price>
           <OldPrice><s>$250.00</s></OldPrice>

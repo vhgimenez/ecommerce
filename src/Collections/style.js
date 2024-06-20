@@ -411,6 +411,12 @@ export const Product = styled.div`
     gap: 1rem;
     cursor: pointer;
 
+    .link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
 `;
 
 export const SectionProductImage = styled.div`

@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { AvatarImage, ButtonCheckout, Card, CardPurchase, CardVisible, CartImage, CloseMenu, Container, ContentCard, ContentProduct, DeleteImage, Icons, ImageCart, Item, ItemMobile, ItensCard, ItensCardEmpty, Menu, MenuList, MenuListMobile, MenuMobile, Nav, NumberAmount, Price, ProductDescription, ProductImage, ProductName, Product, Products, SectionProductImage, TextCard, TextProductCard, TextProductP, TitleCard} from './style'
+import { AvatarImage, ButtonCheckout, Card, CardPurchase, CardVisible, CartImage, CloseMenu, Container, ContentCard, ContentProduct, DeleteImage, Icons, ImageCart, Item, ItemMobile, ItensCard, ItensCardEmpty, Menu, MenuList, MenuListMobile, MenuMobile, Nav, NumberAmount, Price, ProductDescription, ProductImage, ProductName, Product, Products, SectionProductImage, TextCard, TextProductCard, TextProductP, TitleCard, Title} from './style'
 import adi2000 from '../assets/adi2000.avif';
 
 export function Collections({ product }) {
@@ -117,6 +117,7 @@ export function Collections({ product }) {
         <ButtonCheckout className='checkout'>Checkout</ButtonCheckout>
       </CardVisible>
     </Card>
+    <Title>Collections</Title>
     <Products>
         {products&& products.map((product) => (
     <Product key={product.id}>

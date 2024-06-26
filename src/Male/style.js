@@ -392,6 +392,17 @@ export const ButtonCheckout = styled.button`
 
 `;
 
+export const Title = styled.h1`
+
+    margin-top: 2rem;
+    text-transform: uppercase;
+    color: hsl(220, 13%, 13%);
+    font-size: 2.2rem;
+    border-bottom: 4px solid hsl(26, 100%, 55%);
+    width: 10rem;
+
+`;
+
 export const Products = styled.div`
     
     margin-top: 5rem;

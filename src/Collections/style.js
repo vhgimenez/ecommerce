@@ -392,9 +392,20 @@ export const ButtonCheckout = styled.button`
 
 `;
 
+export const Title = styled.h1`
+
+    margin-top: 2rem;
+    text-transform: uppercase;
+    color: hsl(220, 13%, 13%);
+    font-size: 2.2rem;
+    border-bottom: 4px solid hsl(26, 100%, 55%);
+    width: 20rem;
+
+`;
+
 export const Products = styled.div`
     
-    margin-top: 5rem;
+    margin-top: 2rem;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr); 

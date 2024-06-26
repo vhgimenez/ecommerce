@@ -54,6 +54,8 @@ export function BuyPage() {
   const [product, setProduct] = useState(null);
   const [overlayVisible, setOverlayVisible] = useState(false);
   const activeCard = document.querySelector('.active-card');
+  const principalImage = document.querySelector('.principal-image');
+  const imageCard = document.querySelector('.image-card');
   const navigate = useNavigate();
 
   function pageCollections() {
@@ -186,6 +188,16 @@ export function BuyPage() {
         return imageName; // Caso padrão, retorna o próprio nome da imagem (pode ser um caminho relativo ou URL)
     }
   }
+        
+  const openOverlay = () => {
+    setOverlayVisible(true);
+    console.log(principalImage);
+  };
+  
+  const closeOverlay = () => {
+    setOverlayVisible(false);
+  };
+
 
   useEffect(() => {
           
@@ -193,9 +205,7 @@ export function BuyPage() {
 
       const btnCart = document.querySelector('.btn-cart');
       const cart = document.querySelector('.cart');
-      const principalImage = document.querySelector('.principal-image');
       const overlay = document.querySelector('.overlay');
-      const imageCard = document.querySelector('.image-card');
       const btnCloseCard = document.querySelector('.btn-closecard');
       const btnMenuMobile = document.querySelector('.btn-menu-mobile');
       const menuMobile = document.querySelector('.menu-mobile');
@@ -224,21 +234,6 @@ export function BuyPage() {
         menuMobile.classList.add('hide');
       })
 
-      const openOverlay = () => {
-        setOverlayVisible(true);
-      };
-      
-      const closeOverlay = () => {
-        setOverlayVisible(false);
-      };
-
-      //activeCard.addEventListener('click', openOverlay);
-      
-      document.addEventListener('click', (event) => {
-        if (!imageCard.contains(event.target) && event.target !== principalImage) {
-          closeOverlay();
-        }
-      });
 
       btnCloseCard.addEventListener('click', () => {
         closeImageCard();
@@ -303,7 +298,7 @@ export function BuyPage() {
       <ProductImages>
         <ActiveCardImage className='active-card'>
           <PrincipalImage src={selectedImage} 
-          className='principal-image'></PrincipalImage>
+          className='principal-image' onClick={openOverlay}></PrincipalImage>
         </ActiveCardImage>
         <Images>
         <ProductImage
@@ -384,32 +379,44 @@ export function BuyPage() {
         <ButtonCheckout className='checkout'>Checkout</ButtonCheckout>
       </CardVisible>
     </Card>
-        <div className={`overlay ${overlayVisible ? '' : 'hide'}`}>
+        <div className={`overlay ${overlayVisible ? '' : 'hide'}`} onClick={closeOverlay}>
           <ImageCard className={`image-card ${overlayVisible ? '' : 'hide'}`}>
-            <ImagePrincipalCard src={selectedImage}></ImagePrincipalCard>
-            <Previous>
+            <ImagePrincipalCard src={selectedImage} onClick={(e) => e.stopPropagation()}></ImagePrincipalCard>
+            <Previous onClick={(e) => e.stopPropagation()}>
               <ImagePrevious src={iconPrevious}></ImagePrevious>
             </Previous>
-            <Next>
+            <Next onClick={(e) => e.stopPropagation()}>
               <ImageNext src={iconNext}></ImageNext>
             </Next>
             {product && (
               <ImagesLine>
               <ImageLine src={getImagePath(product.image1)} 
               className={selectedImage === getImagePath(product.image1) ? 'selected' : ''}
-              onClick={() => handleImageClick(getImagePath(product.image1))}></ImageLine>
+              onClick={(e) => {
+                handleImageClick(getImagePath((product.image1)));
+                e.stopPropagation(); // Evita a propagação do evento para o div overlay
+              }}></ImageLine>
               <ImageLine src={getImagePath(product.image2)} 
               className={selectedImage === getImagePath(product.image2) ? 'selected' : ''}
-              onClick={() => handleImageClick(getImagePath(product.image2))}></ImageLine>
+              onClick={(e) => {
+                handleImageClick(getImagePath((product.image2)));
+                e.stopPropagation(); // Evita a propagação do evento para o div overlay
+              }}></ImageLine>
               <ImageLine src={getImagePath(product.image3)} 
               className={selectedImage === getImagePath(product.image3) ? 'selected' : ''}
-              onClick={() => handleImageClick(getImagePath(product.image3))}></ImageLine>
+              onClick={(e) => {
+                handleImageClick(getImagePath((product.image3)));
+                e.stopPropagation(); // Evita a propagação do evento para o div overlay
+              }}></ImageLine>
               <ImageLine src={getImagePath(product.image4)} 
               className={selectedImage === getImagePath(product.image4) ? 'selected' : ''}
-              onClick={() => handleImageClick(getImagePath(product.image4))}></ImageLine>
+              onClick={(e) => {
+                handleImageClick(getImagePath((product.image4)));
+                e.stopPropagation(); // Evita a propagação do evento para o div overlay
+              }}></ImageLine>
             </ImagesLine>
             )}
-            <CloseCard className='btn-closecard'>
+            <CloseCard className='btn-closecard' onClick={closeOverlay}>
               <BtnCloseCard src={iconClose}></BtnCloseCard>
             </CloseCard>
           </ImageCard>

@@ -1,26 +1,26 @@
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { AvatarImage, ButtonCheckout, Card, CardPurchase, CardVisible, CartImage, CloseMenu, Container, ContentCard, ContentProduct, DeleteImage, Icons, ImageCart, Item, ItemMobile, ItensCard, ItensCardEmpty, Menu, MenuList, MenuListMobile, MenuMobile, Nav, NumberAmount, Price, ProductDescription, ProductImage, ProductName, Product, Products, SectionProductImage, TextCard, TextProductCard, TextProductP, TitleCard} from './style'
+import { AvatarImage, ButtonCheckout, Card, CardPurchase, CardVisible, CartImage, CloseMenu, Container, ContentCard, ContentProduct, DeleteImage, Icons, ImageCart, Item, ItemMobile, ItensCard, ItensCardEmpty, Menu, MenuList, MenuListMobile, MenuMobile, Nav, NumberAmount, Price, ProductDescription, ProductImage, ProductName, Product, Products, SectionProductImage, TextCard, TextProductCard, TextProductP, TitleCard} from './style';
 import adi2000 from '../assets/adi2000.avif';
 
-export function Collections({ product }) {
+export function Female() {
 
   const [mounted,setMounted] = useState(false)
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
   async function fetchProducts() {
-    const response = await axios.get('http://localhost:3000/products');
+    const response = await axios.get('http://localhost:3000/products/female');
     setProducts(response.data);
     }
 
-  function pageMale() {
-    navigate('/male');
+  function pageCollections() {
+    navigate('/');
   }
 
-  function pageFemale() {
-    navigate('/female');
+  function pageMale() {
+    navigate('/male')
   }
 
 
@@ -69,9 +69,9 @@ export function Collections({ product }) {
     <MenuMobile className='menu-mobile hide'>
       <CloseMenu className='btn-close-menu' src='icon-close.svg'></CloseMenu>
       <MenuListMobile>
-        <ItemMobile>Collections</ItemMobile>
+        <ItemMobile onClick={pageCollections}>Collections</ItemMobile>
         <ItemMobile onClick={pageMale}>Men</ItemMobile>
-        <ItemMobile onClick={pageFemale}>Women</ItemMobile>
+        <ItemMobile>Women</ItemMobile>
         <ItemMobile>About</ItemMobile>
         <ItemMobile>Contact</ItemMobile>
       </MenuListMobile>
@@ -81,9 +81,9 @@ export function Collections({ product }) {
         <MenuList>
           <Item className='btn-menu-mobile'><img src='icon-menu.svg'></img></Item>
           <Item className='logo'><img src='logo.svg'></img></Item>
-          <Item className='item-selected'>Collections</Item>
+          <Item onClick={pageCollections}>Collections</Item>
           <Item onClick={pageMale}>Men</Item>
-          <Item onClick={pageFemale}>Women</Item>
+          <Item className='item-selected'>Women</Item>
           <Item>About</Item>
           <Item>Contact</Item>
         </MenuList>

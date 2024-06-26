@@ -337,6 +337,10 @@ export const ProductInfos = styled.div`
 
 `;
 
+export const ActiveCardImage = styled.div`
+
+`;
+
 export const PrincipalImage = styled.img`
 
     width: 30rem;

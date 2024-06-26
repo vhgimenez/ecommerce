@@ -1,7 +1,8 @@
 import { React, useState, useEffect } from 'react'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Add, Amount, AvatarImage, Brand, BtnCloseCard, ButtonAddToCard, ButtonCheckout, Buy, Card, CardPurchase, CardVisible, CartImage, CloseCard, CloseMenu, Container, ContentCard, Count, DeleteImage, Desc, Discount, Icons, ImageCard, ImageCart, ImageLine, ImageNext, ImagePrevious, ImagePrincipalCard, Images, ImagesLine, Item, ItemMobile, ItensCard, ItensCardEmpty, Menu, MenuList, MenuListMobile, MenuMobile, Nav, NewPrice, Next, NextMobile, NumberAmount, OldPrice, Previous, PreviousMobile, Price, PrincipalImage, Product, ProductImage, ProductImages, ProductInfos, Remove, TextCard, TextProductCard, TextProductP, Title, TitleCard, TotalPrice } from './style'
+import { useNavigate } from 'react-router-dom';
+import { ActiveCardImage, Add, Amount, AvatarImage, Brand, BtnCloseCard, ButtonAddToCard, ButtonCheckout, Buy, Card, CardPurchase, CardVisible, CartImage, CloseCard, CloseMenu, Container, ContentCard, Count, DeleteImage, Desc, Discount, Icons, ImageCard, ImageCart, ImageLine, ImageNext, ImagePrevious, ImagePrincipalCard, Images, ImagesLine, Item, ItemMobile, ItensCard, ItensCardEmpty, Menu, MenuList, MenuListMobile, MenuMobile, Nav, NewPrice, Next, NextMobile, NumberAmount, OldPrice, Previous, PreviousMobile, Price, PrincipalImage, Product, ProductImage, ProductImages, ProductInfos, Remove, TextCard, TextProductCard, TextProductP, Title, TitleCard, TotalPrice } from './style'
 import logo from '../assets/logo.svg';
 import iconcart from '../assets/icon-cart.svg';
 import avatar from '../assets/image-avatar.png';
@@ -23,6 +24,18 @@ import knu from '../assets/knu.webp';
 import knu2 from '../assets/knu2.webp';
 import knu3 from '../assets/knu3.webp';
 import knu4 from '../assets/knu4.webp';
+import sapatilha from '../assets/sapatilha.webp';
+import sapatilha2 from '../assets/sapatilha2.webp';
+import sapatilha3 from '../assets/sapatilha3.webp';
+import sapatilha4 from '../assets/sapatilha4.webp';
+import bota from '../assets/bota.webp';
+import bota2 from '../assets/bota2.webp';
+import bota3 from '../assets/bota3.webp';
+import bota4 from '../assets/bota4.webp';
+import scarpin from '../assets/scarpin.webp';
+import scarpin2 from '../assets/scarpin2.webp';
+import scarpin3 from '../assets/scarpin3.webp';
+import scarpin4 from '../assets/scarpin4.webp';
 import iconDelete from '../assets/icon-delete.svg';
 import iconPrevious from '../assets/icon-previous.svg';
 import iconNext from '../assets/icon-next.svg';
@@ -30,7 +43,7 @@ import iconMenu from '../assets/icon-menu.svg';
 import iconClose from '../assets/icon-close.svg';
 
 
-export function Home() {
+export function BuyPage() {
 
   const basePath = './';
   const [mounted,setMounted] = useState(false)
@@ -39,6 +52,21 @@ export function Home() {
   const [selectedImage, setSelectedImage] = useState(''); // Inicializa sem valor inicial
   const { id } = useParams(); // Utilize o hook useParams para obter o parâmetro da rota
   const [product, setProduct] = useState(null);
+  const [overlayVisible, setOverlayVisible] = useState(false);
+  const activeCard = document.querySelector('.active-card');
+  const navigate = useNavigate();
+
+  function pageCollections() {
+    navigate('/');
+  }
+
+  function pageMale() {
+    navigate('/male');
+  }
+
+  function pageFemale() {
+    navigate('/female');
+  }
 
   const incrementCount = () => {
     setCount(count + 1);
@@ -106,6 +134,12 @@ export function Home() {
         return campus;
       case 'knu.webp':
         return knu;
+      case 'sapatilha.webp':
+        return sapatilha;
+      case 'bota.webp':
+        return bota;
+      case 'scarpin.webp':
+        return scarpin;
       case 'adi20002.avif':
         return adi20002;
       case 'suede2.avif':
@@ -114,6 +148,12 @@ export function Home() {
         return campus2;
       case 'knu2.webp':
         return knu2;
+      case 'sapatilha2.webp':
+        return sapatilha2;
+      case 'bota2.webp':
+        return bota2;
+      case 'scarpin2.webp':
+        return scarpin2;
       case 'adi20003.avif':
         return adi20003;
       case 'suede3.avif':
@@ -122,6 +162,12 @@ export function Home() {
         return campus3;
       case 'knu3.webp':
         return knu3;
+      case 'sapatilha3.webp':
+        return sapatilha3;
+      case 'bota3.webp':
+        return bota3;
+      case 'scarpin3.webp':
+        return scarpin3;
       case 'adi20004.avif':
         return adi20004;
       case 'suede4.avif':
@@ -130,6 +176,12 @@ export function Home() {
         return campus4;
       case 'knu4.webp':
         return knu4;
+      case 'sapatilha4.webp':
+        return sapatilha4;
+      case 'bota4.webp':
+        return bota4;
+      case 'scarpin4.webp':
+        return scarpin4;
       default:
         return imageName; // Caso padrão, retorna o próprio nome da imagem (pode ser um caminho relativo ou URL)
     }
@@ -172,26 +224,19 @@ export function Home() {
         menuMobile.classList.add('hide');
       })
 
-      function openCardImage() {
-        overlay.classList.remove('hide');
-        imageCard.classList.remove('hide');
-      }
+      const openOverlay = () => {
+        setOverlayVisible(true);
+      };
+      
+      const closeOverlay = () => {
+        setOverlayVisible(false);
+      };
 
-      document.addEventListener('DOMContentLoaded', () => {
-        // Este código será executado quando o DOM estiver completamente carregado
-        principalImage.addEventListener('click', () => {
-          openCardImage();
-        });
-      });
-
-      function closeImageCard() {
-        overlay.classList.add('hide');
-        imageCard.classList.add('hide');
-      }
+      //activeCard.addEventListener('click', openOverlay);
       
       document.addEventListener('click', (event) => {
         if (!imageCard.contains(event.target) && event.target !== principalImage) {
-          closeImageCard();
+          closeOverlay();
         }
       });
 
@@ -226,9 +271,9 @@ export function Home() {
     <MenuMobile className='menu-mobile hide'>
       <CloseMenu className='btn-close-menu' src={iconClose}></CloseMenu>
       <MenuListMobile>
-        <ItemMobile>Collections</ItemMobile>
-        <ItemMobile>Men</ItemMobile>
-        <ItemMobile>Women</ItemMobile>
+        <ItemMobile onClick={pageCollections}>Collections</ItemMobile>
+        <ItemMobile onClick={pageMale}>Men</ItemMobile>
+        <ItemMobile onClick={pageFemale}>Women</ItemMobile>
         <ItemMobile>About</ItemMobile>
         <ItemMobile>Contact</ItemMobile>
       </MenuListMobile>
@@ -238,9 +283,9 @@ export function Home() {
         <MenuList>
           <Item className='btn-menu-mobile'><img src={iconMenu}></img></Item>
           <Item className='logo'><img src={logo}></img></Item>
-          <Item>Collections</Item>
-          <Item>Men</Item>
-          <Item>Women</Item>
+          <Item onClick={pageCollections}>Collections</Item>
+          <Item onClick={pageMale}>Men</Item>
+          <Item onClick={pageFemale}>Women</Item>
           <Item>About</Item>
           <Item>Contact</Item>
         </MenuList>
@@ -256,8 +301,10 @@ export function Home() {
       <NextMobile><img src={iconNext}></img></NextMobile>
         {product && (
       <ProductImages>
+        <ActiveCardImage className='active-card'>
           <PrincipalImage src={selectedImage} 
           className='principal-image'></PrincipalImage>
+        </ActiveCardImage>
         <Images>
         <ProductImage
           src={getImagePath(product.image1)} 
@@ -321,6 +368,9 @@ export function Home() {
             product.image1 === 'suede.avif' ? suede :
             product.image1 === 'campus.avif' ? campus :
             product.image1 === 'knu.webp' ? knu :
+            product.image1 === 'sapatilha.webp' ? sapatilha :
+            product.image1 === 'bota.webp' ? bota :
+            product.image1 === 'scarpin.webp' ? scarpin :
             product.image1
           } ></ImageCart>
             <TextProductCard>
@@ -334,8 +384,8 @@ export function Home() {
         <ButtonCheckout className='checkout'>Checkout</ButtonCheckout>
       </CardVisible>
     </Card>
-        <div className="overlay hide">
-          <ImageCard className='image-card hide'>
+        <div className={`overlay ${overlayVisible ? '' : 'hide'}`}>
+          <ImageCard className={`image-card ${overlayVisible ? '' : 'hide'}`}>
             <ImagePrincipalCard src={selectedImage}></ImagePrincipalCard>
             <Previous>
               <ImagePrevious src={iconPrevious}></ImagePrevious>
@@ -360,7 +410,7 @@ export function Home() {
             </ImagesLine>
             )}
             <CloseCard className='btn-closecard'>
-              <BtnCloseCard src='icon-close.svg'></BtnCloseCard>
+              <BtnCloseCard src={iconClose}></BtnCloseCard>
             </CloseCard>
           </ImageCard>
         </div>

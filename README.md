@@ -1,7 +1,7 @@
 
 # E-Commerce
 
-Esse é um projeto de e-commerce de tênis, desenvolvido com React e alguns componentes
+Esse é um projeto de e-commerce de tênis, desenvolvido com React e alguns componentes.
 
 ## Ferramentas Utilizadas
 
